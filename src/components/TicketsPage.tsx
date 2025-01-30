@@ -1,5 +1,12 @@
 import React, { memo } from "react";
-import { Box, Text, VStack, HStack, Icon, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  VStack,
+  HStack,
+  Icon,
+  Flex,
+} from "@chakra-ui/react";
 import {
   ArrowLongDownIcon,
   MinusIcon,
@@ -33,11 +40,10 @@ const getPriorityIcon = (priority?: string): PriorityIcon | null => {
 const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
   const groupedTickets = {
     backlog: tickets.filter((ticket) => ticket.status === "backlog"),
+    triage: tickets.filter((ticket) => ticket.status === "triage"),
     inProgress: tickets.filter((ticket) => ticket.status === "in-progress"),
     done: tickets.filter((ticket) => ticket.status === "done"),
   };
-
-  console.log(tickets);
 
   const renderTickets = (ticketList: Ticket[]) => (
     <VStack align="stretch" gap={4}>
@@ -56,29 +62,33 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
         return (
           <Box
             key={ticket.id}
-            p={5}
-            borderRadius="sm"
-            background="white"
+            p={4}
+            borderRadius="md"
+            bg="white"
+            color="black"
             transition="transform 0.2s, box-shadow 0.2s"
-            _hover={{ transform: "translateY(-2px)", boxShadow: "lg" }}
-            height="200px" 
+            _hover={{ transform: "translateY(-2px)", boxShadow: "md" }}
             display="flex"
             flexDirection="column"
             justifyContent="space-between"
           >
-            <Box as="header" mb={3}>
-              <Text fontWeight="bold" fontSize="lg" color="black" lineClamp={2}>
+            <Box as="header" mb={2}>
+              <Text
+                fontWeight="bold"
+                fontSize="md"
+                lineClamp={2}
+              >
                 {ticket.title}
               </Text>
             </Box>
 
-            <Box as="section" mb={3} flex="1">
-              <Text color="gray.700" lineClamp={2}>
+            <Box as="section" mb={2} flex="1">
+              <Text color="gray.600" lineClamp={3}>
                 {ticket.description}
               </Text>
             </Box>
 
-            <Box borderTop="1px solid" borderColor="gray.200" mt={3} pt={3}>
+            <Box borderTop="1px" borderColor="gray.200" pt={2}>
               <Flex justify="space-between" align="center">
                 {formattedDueDate && (
                   <Text fontSize="sm" color="gray.500">
@@ -93,16 +103,16 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
                     <Icon
                       as={priority.icon}
                       color={priority.color}
-                      boxSize={5}
+                      boxSize={4}
                     />
                   </HStack>
                 )}
-                <Avatar
-                  name={ticket.assignee?.name}
-                  colorPalette="blue"
-                  src={ticket.assignee?.avatarUrl}
-                  size="sm"
-                />
+                  <Avatar
+                    name={ticket?.assignee?.name}
+                    colorPalette="blue"
+                    src={ticket?.assignee?.avatarUrl}
+                    size="sm"
+                  />
               </Flex>
             </Box>
           </Box>
@@ -114,24 +124,55 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
   return (
     <>
       <Box>
-        <Text fontSize="2xl" fontWeight="bold" mb={4} color="white">
+        <Text fontSize="xl" fontWeight="bold" mb={4} color="white">
           Backlog
         </Text>
-        {renderTickets(groupedTickets.backlog)}
+        {groupedTickets.backlog.length > 0 ? (
+          renderTickets(groupedTickets.backlog)
+        ) : (
+          <Text color="gray.400" fontSize="sm">
+            No tickets in backlog.
+          </Text>
+        )}
       </Box>
 
       <Box>
-        <Text fontSize="2xl" fontWeight="bold" mb={4} color="white">
+        <Text fontSize="xl" fontWeight="bold" mb={4} color="white">
+          Triage
+        </Text>
+        {groupedTickets.triage.length > 0 ? (
+          renderTickets(groupedTickets.triage)
+        ) : (
+          <Text color="gray.400" fontSize="sm">
+            No tickets in triage.
+          </Text>
+        )}
+      </Box>
+
+      <Box>
+        <Text fontSize="xl" fontWeight="bold" mb={4} color="white">
           In Progress
         </Text>
-        {renderTickets(groupedTickets.inProgress)}
+        {groupedTickets.inProgress.length > 0 ? (
+          renderTickets(groupedTickets.inProgress)
+        ) : (
+          <Text color="gray.400" fontSize="sm">
+            No tickets in progress.
+          </Text>
+        )}
       </Box>
 
       <Box>
-        <Text fontSize="2xl" fontWeight="bold" mb={4} color="white">
+        <Text fontSize="xl" fontWeight="bold" mb={4} color="white">
           Done
         </Text>
-        {renderTickets(groupedTickets.done)}
+        {groupedTickets.done.length > 0 ? (
+          renderTickets(groupedTickets.done)
+        ) : (
+          <Text color="gray.400" fontSize="sm">
+            No tickets done.
+          </Text>
+        )}
       </Box>
     </>
   );

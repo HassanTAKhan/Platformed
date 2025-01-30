@@ -1,9 +1,8 @@
 import NavBar from "./NavBar";
-import TicketsPage from "./TicketsPage";
 import { useState } from "react";
-import PageLayout from "./PageLayout";
 import { TICKETS } from "../core/data";
 import { Provider } from "./ui/provider";
+import { TicketsPageContainer } from "./TicketsPageContainer";
 
 function App() {
   const [tickets] = useState(() => TICKETS);
@@ -16,9 +15,7 @@ function App() {
         defaultTheme="dark"
       >
         <NavBar />
-        <PageLayout>
-          <TicketsPage tickets={tickets} />
-        </PageLayout>
+        <TicketsPageContainer tickets={tickets}/>
       </Provider>
     </>
   );

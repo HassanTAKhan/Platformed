@@ -7,8 +7,8 @@ interface PageLayoutProps {
 
 const PageLayout: React.FC<PageLayoutProps> = memo(({ children }) => {
   return (
-    <Box flex="1" overflowY="auto" bg="gray.900" p={8}>
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+    <Box flex="1" overflowY="auto" bg="gray.900" p={4}>
+      <SimpleGrid columns={{ base: 1, md: 4 }} gap={6}>
         {children}
       </SimpleGrid>
     </Box>
