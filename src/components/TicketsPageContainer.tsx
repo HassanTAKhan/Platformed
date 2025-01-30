@@ -30,7 +30,7 @@ export const TicketsPageContainer: React.FC<TicketContainerProps> = ({
 
     setFilteredTickets(filtered);
   }, [filterValue, tickets]);
-  console.log(tickets);
+
   return (
     <>
       <Filter onFilterChange={setFilterValue} />
