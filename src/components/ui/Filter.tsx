@@ -1,4 +1,12 @@
-import { HStack, Box, Flex, Select, IconButton, createListCollection } from "@chakra-ui/react";
+import {
+  HStack,
+  Box,
+  Flex,
+  Select,
+  IconButton,
+  createListCollection,
+  Icon,
+} from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import * as React from "react";
 
@@ -8,17 +16,19 @@ export interface FilterProps {
 
 export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [isFilterVisible, setIsFilterVisible] = React.useState(false);
-  const [priority, setPriority] = React.useState<string>('none');
-  const [status, setStatus] = React.useState<string>('none');
+  const [priority, setPriority] = React.useState<string>("none");
+  const [status, setStatus] = React.useState<string>("none");
+  const [isPriorityOpen, setIsPriorityOpen] = React.useState(false);
+  const [isStatusOpen, setIsStatusOpen] = React.useState(false);
 
   const handlePriorityChange = (value: string[]) => {
-    const newPriority = value.pop() || 'none';
+    const newPriority = value.pop() || "none";
     setPriority(newPriority);
     onFilterChange({ priority: newPriority, status });
   };
 
   const handleStatusChange = (value: string[]) => {
-    const newStatus = value.pop() || 'none';
+    const newStatus = value.pop() || "none";
     setStatus(newStatus);
     onFilterChange({ priority, status: newStatus });
   };
@@ -50,26 +60,31 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
         mb={4}
         p={3}
       >
-       Filter{isFilterVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        Filter {isFilterVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
       </IconButton>
       {isFilterVisible && (
-        <HStack
-          align="start"
-          position="relative"
-          wrap="wrap"
-          justify="center"
-        >
-          <Box width={["100%", "320px"]}>
+        <HStack align="start" position="relative" wrap="wrap" justify="center">
+          <Box width={["100%", "200px"]}>
             <Select.Root
               collection={priorityCollection}
               size="sm"
               width="100%"
               value={[priority]}
               onValueChange={(event) => handlePriorityChange(event.value)}
+              onOpenChange={() => setIsPriorityOpen((prev) => !prev)}
             >
               <Select.Label>Select priority</Select.Label>
               <Select.Trigger>
                 <Select.ValueText placeholder="Select priority" />
+                {isPriorityOpen ? (
+                  <Icon>
+                    <ChevronUpIcon />
+                  </Icon>
+                ) : (
+                  <Icon>
+                    <ChevronDownIcon />
+                  </Icon>
+                )}
               </Select.Trigger>
               <Select.Content position="absolute" zIndex={10}>
                 {priorityCollection.items.map((item) => (
@@ -80,17 +95,27 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
               </Select.Content>
             </Select.Root>
           </Box>
-          <Box width={["100%", "320px"]}>
+          <Box width={["100%", "200px"]}>
             <Select.Root
               collection={statusCollection}
               size="sm"
               width="100%"
               value={[status]}
               onValueChange={(event) => handleStatusChange(event.value)}
+              onOpenChange={() => setIsStatusOpen((prev) => !prev)}
             >
               <Select.Label>Select status</Select.Label>
               <Select.Trigger>
                 <Select.ValueText placeholder="Select status" />
+                {isStatusOpen ? (
+                  <Icon>
+                    <ChevronUpIcon />
+                  </Icon>
+                ) : (
+                  <Icon>
+                    <ChevronDownIcon />
+                  </Icon>
+                )}
               </Select.Trigger>
               <Select.Content position="absolute" zIndex={10}>
                 {statusCollection.items.map((item) => (
