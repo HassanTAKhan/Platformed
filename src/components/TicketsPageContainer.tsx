@@ -12,20 +12,29 @@ export const TicketsPageContainer: React.FC<TicketContainerProps> = ({
   tickets,
 }) => {
   const [filteredTickets, setFilteredTickets] = useState<Ticket[]>(tickets);
-  const [filterValue, setFilterValue] = useState<{ priority: string; status: string }>({
-    priority: 'none',
-    status: 'none',
+  const [filterValue, setFilterValue] = useState<{
+    priority: string;
+    status: string;
+  }>({
+    priority: "none",
+    status: "none",
   });
 
   useEffect(() => {
     let filtered = tickets;
 
-    if (filterValue.priority !== 'none') {
-      filtered = filtered.filter(ticket => ticket.priority === filterValue.priority);
+    if (filterValue.priority === "unassigned") {
+      filtered = filtered.filter((ticket) => !("priority" in ticket));
+    } else if (filterValue.priority !== "none") {
+      filtered = filtered.filter(
+        (ticket) => ticket.priority === filterValue.priority
+      );
     }
 
-    if (filterValue.status !== 'none') {
-      filtered = filtered.filter(ticket => ticket.status === filterValue.status);
+    if (filterValue.status !== "none") {
+      filtered = filtered.filter(
+        (ticket) => ticket.status === filterValue.status
+      );
     }
 
     setFilteredTickets(filtered);

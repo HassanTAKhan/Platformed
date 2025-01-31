@@ -13,6 +13,7 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
 
   const handlePriorityChange = (value: string[]) => {
     const newPriority = value.pop() || 'none';
+    console.log(newPriority)
     setPriority(newPriority);
     onFilterChange({ priority: newPriority, status });
   };
@@ -26,6 +27,7 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const priorityCollection = createListCollection({
     items: [
       { label: "Select priority", value: "none" },
+      { label: "Unassigned", value: "unassigned" },
       { label: "Low", value: "low" },
       { label: "Medium", value: "medium" },
       { label: "High", value: "high" },
