@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Avatar } from "./ui/avatar";
 import { Ticket } from "../core/types";
+import { capitaliseFirstLetter } from "../core/utils/utils";
 
 interface TicketsPageProps {
   tickets: Ticket[];
@@ -87,11 +88,9 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
 
             <Box borderTop="1px" borderColor="gray.200" pt={2}>
               <Flex justify="space-between" align="center">
-                {formattedDueDate && (
-                  <Text fontSize="sm" color="gray.500">
-                    Due: {formattedDueDate}
-                  </Text>
-                )}
+                <Text fontSize="sm" color="gray.500">
+                  Due: {formattedDueDate || "No assigned date"}
+                </Text>
                 {ticket.priority && priority && (
                   <HStack gap={1}>
                     <Tooltip.Root>
@@ -118,7 +117,7 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
                         position="absolute"
                         transform="translateX(-50%)"
                       >
-                        {ticket?.priority} priority
+                        {`${capitaliseFirstLetter(ticket?.priority)} priority`}
                       </Tooltip.Content>
                     </Tooltip.Root>
                   </HStack>
