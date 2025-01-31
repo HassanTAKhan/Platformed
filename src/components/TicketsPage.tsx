@@ -6,6 +6,7 @@ import {
   HStack,
   Icon,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   ArrowLongDownIcon,
@@ -73,11 +74,7 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
             justifyContent="space-between"
           >
             <Box as="header" mb={2}>
-              <Text
-                fontWeight="bold"
-                fontSize="md"
-                lineClamp={2}
-              >
+              <Text fontWeight="bold" fontSize="md" lineClamp={2}>
                 {ticket.title}
               </Text>
             </Box>
@@ -107,12 +104,29 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
                     />
                   </HStack>
                 )}
-                  <Avatar
-                    name={ticket?.assignee?.name}
-                    colorPalette="blue"
-                    src={ticket?.assignee?.avatarUrl}
-                    size="sm"
-                  />
+                <Tooltip.Root>
+                  <Tooltip.Trigger>
+                    <Avatar
+                      name={ticket.assignee?.name}
+                      src={ticket.assignee?.avatarUrl}
+                      size="sm"
+                      cursor="pointer"
+                    />
+                  </Tooltip.Trigger>
+                  <Tooltip.Content
+                    bg="gray.700"
+                    color="white"
+                    fontSize="sm"
+                    borderRadius="md"
+                    zIndex={10}
+                    position="absolute"
+                    top="100%"
+                    left="100%"
+                    transform="translateX(-50%)"
+                  >
+                    {ticket?.assignee?.name || "Unassigned"}
+                  </Tooltip.Content>
+                </Tooltip.Root>
               </Flex>
             </Box>
           </Box>

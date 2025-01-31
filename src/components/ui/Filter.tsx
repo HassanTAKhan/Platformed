@@ -1,5 +1,5 @@
-import { HStack, Box, Flex, Select, Button } from "@chakra-ui/react";
-import { createListCollection } from "@chakra-ui/react"
+import { HStack, Box, Flex, Select, IconButton, createListCollection } from "@chakra-ui/react";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import * as React from "react";
 
 export interface FilterProps {
@@ -44,9 +44,13 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
 
   return (
     <Flex direction="column" align="center" p={6}>
-      <Button onClick={() => setIsFilterVisible(!isFilterVisible)} mb={4}>
-        Filter
-      </Button>
+      <IconButton
+        onClick={() => setIsFilterVisible(!isFilterVisible)}
+        mb={4}
+        p={3}
+      >
+       Filter{isFilterVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
+      </IconButton>
       {isFilterVisible && (
         <HStack
           align="start"
