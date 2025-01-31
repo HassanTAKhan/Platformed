@@ -13,7 +13,6 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
 
   const handlePriorityChange = (value: string[]) => {
     const newPriority = value.pop() || 'none';
-    console.log(newPriority)
     setPriority(newPriority);
     onFilterChange({ priority: newPriority, status });
   };
