@@ -94,14 +94,33 @@ const TicketsPage: React.FC<TicketsPageProps> = ({ tickets }) => {
                 )}
                 {ticket.priority && priority && (
                   <HStack gap={1}>
-                    <Text fontSize="sm" color="gray.500">
-                      Priority:
-                    </Text>
-                    <Icon
-                      as={priority.icon}
-                      color={priority.color}
-                      boxSize={4}
-                    />
+                    <Tooltip.Root>
+                      <Tooltip.Trigger>
+                        <Flex>
+                          <Text fontSize="sm" color="gray.500">
+                            Priority:
+                          </Text>
+                          <Icon
+                            as={priority.icon}
+                            color={priority.color}
+                            marginTop="3px"
+                            fontSize="15px"
+                          />
+                        </Flex>
+                      </Tooltip.Trigger>
+
+                      <Tooltip.Content
+                        bg="gray.700"
+                        color="white"
+                        fontSize="sm"
+                        borderRadius="md"
+                        zIndex={10}
+                        position="absolute"
+                        transform="translateX(-50%)"
+                      >
+                        {ticket?.priority} priority
+                      </Tooltip.Content>
+                    </Tooltip.Root>
                   </HStack>
                 )}
                 <Tooltip.Root>

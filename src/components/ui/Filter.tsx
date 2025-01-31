@@ -63,6 +63,7 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
               collection={priorityCollection}
               size="sm"
               width="100%"
+              value={[priority]}
               onValueChange={(event) => handlePriorityChange(event.value)}
             >
               <Select.Label>Select priority</Select.Label>
@@ -83,6 +84,7 @@ export const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
               collection={statusCollection}
               size="sm"
               width="100%"
+              value={[status]}
               onValueChange={(event) => handleStatusChange(event.value)}
             >
               <Select.Label>Select status</Select.Label>
